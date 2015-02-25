@@ -1,0 +1,24 @@
+{
+  "name": "mongorestapi",
+  "version": "1.0.0",
+  "description": "Test mit node.js und MongoDb",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.12.0",
+    "express": "^4.11.2",
+    "mongodb": "^1.4.31",
+    "mongoose": "^3.8.23",
+    "mongoskin": "^1.4.12",
+    "morgan": "^1.5.1"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^2.1.0",
+    "superagent": "^0.21.0"
+  }
+}
