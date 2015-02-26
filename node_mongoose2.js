@@ -36,7 +36,7 @@ function bulk_insert() {
 
   var bulkResults;
   tests.forEach(function (item) {
-    bulk.insert(item)
+    bulk.insert(item, {w: 1})
   });
 
   bulkResults = bulk.execute(function (err, results) {
@@ -48,4 +48,9 @@ function bulk_insert() {
     mongoose.connection.close();
   });
   console.log(bulkResults);
+}
+
+function conCanClose() {
+  if (!conn)
+    mongoose.connection.close();
 }
