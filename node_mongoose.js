@@ -15,7 +15,7 @@ fs.readdirSync(__dirname + '/models').forEach(function (filename) {
 //find_test_komplex();
 //find_test_komplex2();
 //insert_simple({name: 'julia the hacker', email: 'julia@y.de'});
-//bulk_insert();
+insert_multiple();
 //update_simple();
 //bulk_update();
 
@@ -78,8 +78,8 @@ function find_test_komplex2() {
       });
 }
 
-function bulk_insert() {
-  // not clear, if this is really a bulk insert, but for small size array it is o.k.
+function insert_multiple() {
+  // this is not a real bulk insert, but for small size array it is o.k.
   var tests = [
     {name: 'Jutta', email: 'Trecki@a.de'},
     {name: 'Judith Hempel', email: 'JHempel@a.de'},
