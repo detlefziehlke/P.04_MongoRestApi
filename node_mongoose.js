@@ -17,7 +17,7 @@ fs.readdirSync(__dirname + '/models').forEach(function (filename) {
 //insert_simple({name: 'julia the hacker', email: 'julia@y.de'});
 //bulk_insert();
 //update_simple();
-bulk_update();
+//bulk_update();
 
 function insert_simple(obj) {
   conn++;
@@ -113,19 +113,10 @@ function update_simple() {
 }
 
 function bulk_update() {
- // no implementation found in the way we are looking for
- // so let's use update_simple with foreach loop or somethin like that
+  // nur nach erfolger connection siehe node_mongoose2.js
+}
 
-  conn++;
-  var bulk = mongoose.model('tests').collection.initializeOrderedBulkOp();
-  console.log('bulk: ' + bulk);
-
-
-  conn--;
-  conCanClose();
- }
-
-function array_update(test_objects){
+function array_update(test_objects) {
 // here we to solve the problem of parallel or serialized processing of multiple db operations
   conn++;
   //.update
@@ -159,7 +150,7 @@ function find_populate() {
 }
 
 function conCanClose() {
-  console.log('open request = ' + conn);
+  //console.log('open request = ' + conn);
 
   if (!conn)
     mongoose.connection.close();
