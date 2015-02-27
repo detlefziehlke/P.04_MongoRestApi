@@ -27,7 +27,7 @@ app.get('/', function (req, res, next) {
   res.send('please select a collection, e.g., /collections/messages');
 });
 
-app.get('/collections/:collectionName', function (req, res, next) {
+app.get('/collections2/:collectionName', function (req, res, next) {
   mongoose.model(req.collection).find(function (err, results) {
     if (err) return next(err);
     else {
@@ -37,37 +37,54 @@ app.get('/collections/:collectionName', function (req, res, next) {
   });
 });
 
-app.get('/collections2/:collectionName', function (req, res, next) {
-  //var query = mongoose.model(req.collection).find().sort({name: -1});
-  //query.sort({name: 1});
-  //query.exec(function (err, results) {
-  mongoose.model(req.collection).find({limit: 3, sort: {'_id': -1}}, function (err, results) {
-    if (err) return next(err);
-    else {
-      console.log(results);
-      res.send(results);
-    }
-  });
+app.get('/collections/:collectionName', function (req, res, next) {
+  console.log('***** get ohne id');
+
+  mongoose.model(req.collection)
+      .find()
+      .sort('_id')
+      .limit(3)
+      .exec(function (err, results) {
+        if (err) return next(err);
+        else {
+          console.log(results);
+          res.send(results);
+        }
+      });
 });
 
 
-app.post('/collections/:collectionName', function (req, res, next) {
+app.post('/collections2/:collectionName', function (req, res, next) {
   var Collection = mongoose.model(req.collection);
   var collection = new Collection(req.body);
   collection.save(function (err, results) {
     if (err) return next(err);
     else {
-      console.log(results);
       delete results._doc.__v;
-      console.log(results);
       res.send(results);
     }
   });
 });
 
+app.post('/collections/:collectionName', function (req, res, next) {
+  mongoose.model(req.collection).collection.insert(req.body, function (err, results) {
+    if (err) return next(err);
+    else {
+      res.send(results);
+    }
+  });
+});
+
+app.get('/collections/:collectionName/:id', function (req, res, next) {
+  mongoose.model(req.collection).findById(req.params.id, function (e, result) {
+    if (e) next(e);
+    else res.send(result);
+  });
+});
+
 
 app.use(function (err, req, res, next) {
-  req.send(err);
+  res.send(err);
 })
 
 app.listen(3000, function () {
