@@ -95,7 +95,7 @@ function insert_multiple() {
       console.log(results);
     conn--;
     conCanClose();
-  })
+  });
 }
 
 function update_simple() {
