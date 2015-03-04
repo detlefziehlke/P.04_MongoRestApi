@@ -14,8 +14,24 @@ fs.readdirSync(__dirname + '/models').forEach(function (filename) {
 //find_simple();
 //find_test_komplex();
 //find_test_komplex2();
+
+find_test_komplex2_promise().then(function (data) {
+  for (var i = 0; i < data.length; i++) {
+    delete data[i]._id; // doesn't work !!!!
+    console.log(data[i]);
+  }
+  //console.log('result from #find_test_komplex2: \n' + JSON.stringify(data));
+  conn--;
+  conCanClose();
+}, function (err) {
+  console.log(err);
+  conn--;
+  conCanClose();
+});
+
+
 //insert_simple({name: 'julia the hacker', email: 'julia@y.de'});
-insert_multiple();
+//insert_multiple();
 //update_simple();
 //bulk_update();
 
@@ -76,6 +92,16 @@ function find_test_komplex2() {
         conn--;
         conCanClose();
       });
+}
+
+function find_test_komplex2_promise() {
+  conn++;
+  var query = mongoose.model('projects')
+      .$where('this.name.length < 15')
+      .where({area: {'$ne': 'harry'}})
+      .sort('name -area')// alternative: .sort({name: 'desc', email:-1})
+      .limit(20);
+  return query.exec();
 }
 
 function insert_multiple() {
